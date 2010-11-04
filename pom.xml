@@ -3,19 +3,19 @@
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.xiplink.jira.git</groupId>
-    <artifactId>jira_git_plugin</artifactId>
+    <artifactId>jira4-git-plugin</artifactId>
     <version>0.5.1-SNAPSHOT</version>
 
-    <name>Git JIRA plugin</name>
+    <name>Git JIRA 4 plugin</name>
     <packaging>atlassian-plugin</packaging>
 
     <properties>
-        <jira.version>4.1</jira.version>
-        <jira.data.version>4.0</jira.data.version>
+        <jira.version>4.2</jira.version>
+        <jira.data.version>4.1.1</jira.data.version>
     </properties>
 
-    <description>Git Jira plugin</description>
-    <url>http://github.com/isungurov/jira4-git-plugin</url>
+    <description>Git JIRA 4 plugin</description>
+    <url>https://github.com/abelaska/jira4-git-plugin</url>
 
     <dependencies>
         <dependency>
@@ -23,7 +23,7 @@
             <artifactId>atlassian-jira</artifactId>
             <version>${jira.version}</version>
             <scope>provided</scope>
-        </dependency>
+        </dependency>        
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -39,7 +39,7 @@
         <dependency>
             <groupId>org.eclipse.jgit</groupId>
             <artifactId>org.eclipse.jgit</artifactId>
-            <version>0.7.1</version>
+            <version>0.9.3</version>
         </dependency>
         <dependency>
             <groupId>com.jcraft</groupId>
@@ -66,30 +66,28 @@
     </developers>
 
     <repositories>
+  <repository>
+        <id>atlassian-public</id>
+        <name>Atlassian Public Repository</name>
+        <url>https://maven.atlassian.com/repository/public</url>
+    </repository>
+  <repository>
+        <id>atlassian-maven1</id>
+        <name>Atlassian Maven1 Repository</name>
+        <url>https://maven.atlassian.com/maven1</url>
+    </repository>
         <repository>
             <id>jgit-repository</id>
             <url>http://download.eclipse.org/jgit/maven</url>
         </repository>
     </repositories>
-    <distributionManagement>
-        <repository>
-            <id>atlassian-contrib</id>
-            <name>Atlassian Contrib Repository</name>
-            <url>dav:https://maven.atlassian.com/contrib</url>
-        </repository>
-        <snapshotRepository>
-            <id>atlassian-contrib-snapshot</id>
-            <name>Atlassian Contrib Snapshot Repository</name>
-            <url>dav:https://maven.atlassian.com/contrib-snapshot</url>
-        </snapshotRepository>
-    </distributionManagement>
 
     <build>
         <plugins>
             <plugin>
                 <groupId>com.atlassian.maven.plugins</groupId>
                 <artifactId>maven-jira-plugin</artifactId>
-                <version>3.0</version>
+                <version>3.2.3</version>
                 <extensions>true</extensions>
                 <configuration>
                     <productVersion>${jira.version}</productVersion>
