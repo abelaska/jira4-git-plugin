@@ -1,107 +1,106 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.xiplink.jira.git</groupId>
+	<artifactId>jira4-git-plugin</artifactId>
+	<version>0.5.1-SNAPSHOT</version>
 
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>com.xiplink.jira.git</groupId>
-    <artifactId>jira4-git-plugin</artifactId>
-    <version>0.5.1-SNAPSHOT</version>
+	<name>Git JIRA 4 plugin</name>
+	<packaging>atlassian-plugin</packaging>
 
-    <name>Git JIRA 4 plugin</name>
-    <packaging>atlassian-plugin</packaging>
+	<properties>
+		<jira.version>4.2</jira.version>
+		<jira.data.version>4.1.1</jira.data.version>
+	</properties>
 
-    <properties>
-        <jira.version>4.2</jira.version>
-        <jira.data.version>4.1.1</jira.data.version>
-    </properties>
+	<description>Git JIRA 4 plugin</description>
+	<url>https://github.com/abelaska/jira4-git-plugin</url>
 
-    <description>Git JIRA 4 plugin</description>
-    <url>https://github.com/abelaska/jira4-git-plugin</url>
+	<dependencies>
+		<dependency>
+			<groupId>com.atlassian.jira</groupId>
+			<artifactId>atlassian-jira</artifactId>
+			<version>${jira.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.6</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.atlassian.jira</groupId>
+			<artifactId>jira-func-tests</artifactId>
+			<version>${jira.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jgit</groupId>
+			<artifactId>org.eclipse.jgit</artifactId>
+			<version>0.9.3</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jcraft</groupId>
+			<artifactId>jsch</artifactId>
+			<version>0.1.42</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.atlassian.jira</groupId>
-            <artifactId>atlassian-jira</artifactId>
-            <version>${jira.version}</version>
-            <scope>provided</scope>
-        </dependency>        
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.6</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.atlassian.jira</groupId>
-            <artifactId>jira-func-tests</artifactId>
-            <version>${jira.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.eclipse.jgit</groupId>
-            <artifactId>org.eclipse.jgit</artifactId>
-            <version>0.9.3</version>
-        </dependency>
-        <dependency>
-            <groupId>com.jcraft</groupId>
-            <artifactId>jsch</artifactId>
-            <version>0.1.42</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
+	<developers>
+		<developer>
+			<name>J. Longman</name>
+			<organization>XipLink, Inc.</organization>
+		</developer>
+		<developer>
+			<name>Ivan Sungurov</name>
+			<organization>ISS Art, Ltd.</organization>
+		</developer>
+	</developers>
 
-    <developers>
-        <developer>
-            <name>J. Longman</name>
-            <organization>XipLink, Inc.</organization>
-        </developer>
-        <developer>
-            <name>Ivan Sungurov</name>
-            <organization>ISS Art, Ltd.</organization>
-        </developer>
-    </developers>
+	<repositories>
+		<repository>
+			<id>atlassian-public</id>
+			<name>Atlassian Public Repository</name>
+			<url>https://maven.atlassian.com/repository/public</url>
+		</repository>
+		<repository>
+			<id>atlassian-maven1</id>
+			<name>Atlassian Maven1 Repository</name>
+			<url>https://maven.atlassian.com/maven1</url>
+		</repository>
+		<repository>
+			<id>jgit-repository</id>
+			<url>http://download.eclipse.org/jgit/maven</url>
+		</repository>
+	</repositories>
 
-    <repositories>
-  <repository>
-        <id>atlassian-public</id>
-        <name>Atlassian Public Repository</name>
-        <url>https://maven.atlassian.com/repository/public</url>
-    </repository>
-  <repository>
-        <id>atlassian-maven1</id>
-        <name>Atlassian Maven1 Repository</name>
-        <url>https://maven.atlassian.com/maven1</url>
-    </repository>
-        <repository>
-            <id>jgit-repository</id>
-            <url>http://download.eclipse.org/jgit/maven</url>
-        </repository>
-    </repositories>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>com.atlassian.maven.plugins</groupId>
-                <artifactId>maven-jira-plugin</artifactId>
-                <version>3.2.3</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <productVersion>${jira.version}</productVersion>
-                    <productDataVersion>${jira.data.version}</productDataVersion>
-                </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.atlassian.maven.plugins</groupId>
+				<artifactId>maven-jira-plugin</artifactId>
+				<version>3.2.3</version>
+				<extensions>true</extensions>
+				<configuration>
+					<productVersion>${jira.version}</productVersion>
+					<productDataVersion>${jira.data.version}</productDataVersion>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
