@@ -1,1 +1,8 @@
 This is fork of https://studio.plugins.atlassian.com/wiki/display/JGIT/JIRA+Git+Plugin with Jira 4 support and branch support
+
+Installation:
+
+1/ copy jira4-git-plugin-0.5.1.jar into directory atlassian-jira/WEB-INF/lib in JIRA project directory
+2/ download http://download.eclipse.org/jgit/maven/org/eclipse/jgit/org.eclipse.jgit/0.9.3/org.eclipse.jgit-0.9.3.jar into directory atlassian-jira/WEB-INF/lib in JIRA project directory
+
+That's all, enjoy.
