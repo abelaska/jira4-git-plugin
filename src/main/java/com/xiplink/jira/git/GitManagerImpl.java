@@ -5,25 +5,34 @@
  */
 package com.xiplink.jira.git;
 
-import com.atlassian.jira.InfrastructureException;
-import com.atlassian.jira.util.JiraKeyUtils;
-import com.opensymphony.module.propertyset.PropertySet;
-import com.opensymphony.util.TextUtils;
-import com.xiplink.jira.git.linkrenderer.GitLinkRenderer;
-import com.xiplink.jira.git.linkrenderer.LinkFormatRenderer;
-import com.xiplink.jira.git.linkrenderer.NullLinkRenderer;
+import static org.eclipse.jgit.lib.Constants.R_HEADS;
+import static org.eclipse.jgit.lib.Constants.R_REMOTES;
+import static org.eclipse.jgit.lib.Constants.R_TAGS;
+
+import java.io.File;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.collections.map.LRUMap;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.jgit.errors.CorruptObjectException;
 import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.errors.MissingObjectException;
+import org.eclipse.jgit.lib.AbbreviatedObjectId;
 import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.RefUpdate;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.RepositoryBuilder;
 import org.eclipse.jgit.lib.TextProgressMonitor;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevFlag;
@@ -36,22 +45,17 @@ import org.eclipse.jgit.transport.TrackingRefUpdate;
 import org.eclipse.jgit.transport.Transport;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
+
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
-import java.io.File;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import static org.eclipse.jgit.lib.Constants.R_HEADS;
-import static org.eclipse.jgit.lib.Constants.R_REMOTES;
-import static org.eclipse.jgit.lib.Constants.R_TAGS;
+import com.atlassian.jira.InfrastructureException;
+import com.atlassian.jira.util.JiraKeyUtils;
+import com.opensymphony.module.propertyset.PropertySet;
+import com.opensymphony.util.TextUtils;
+import com.xiplink.jira.git.linkrenderer.GitLinkRenderer;
+import com.xiplink.jira.git.linkrenderer.LinkFormatRenderer;
+import com.xiplink.jira.git.linkrenderer.NullLinkRenderer;
 
 public class GitManagerImpl implements GitManager {
 	private static final class GitDirectoryFilenameFilter implements FilenameFilter {
@@ -372,7 +376,7 @@ public class GitManagerImpl implements GitManager {
 			return;
 		}
 		try {
-			repository = new Repository(gitdir);
+			repository = new RepositoryBuilder().setGitDir(gitdir).build();
 		} catch (IOException e) {
 			log.error("Connection to git repository " + getRoot() + " failed: " + e.getMessage(), e);
 			// We don't want to throw an exception here because then the system
@@ -553,14 +557,15 @@ public class GitManagerImpl implements GitManager {
 		}
 
 		if (r == RefUpdate.Result.FORCED) {
-			final String aOld = u.getOldObjectId().abbreviate(repository).toString();
-			final String aNew = u.getNewObjectId().abbreviate(repository).toString();
+			final String aOld = AbbreviatedObjectId.fromObjectId(u.getOldObjectId()).toString();
+			final String aNew = AbbreviatedObjectId.fromObjectId(u.getNewObjectId()).toString();
 			return aOld + "..." + aNew;
 		}
 
 		if (r == RefUpdate.Result.FAST_FORWARD) {
-			final String aOld = u.getOldObjectId().abbreviate(repository).toString();
-			final String aNew = u.getNewObjectId().abbreviate(repository).toString();
+			;
+			final String aOld = AbbreviatedObjectId.fromObjectId(u.getOldObjectId()).toString();
+			final String aNew = AbbreviatedObjectId.fromObjectId(u.getNewObjectId()).toString();
 			return aOld + ".." + aNew;
 		}
 
